@@ -97,4 +97,166 @@ The modelling workflow used approximately 150,000 synthetic observations and 75 
 
 `alert_battery_30d`
 
-This target represents whether a battery failure alert is expected within
+This target represents whether a battery failure alert is expected within the next 30 days.
+
+## 6. Deep Learning Model
+
+The project implements a Deep Neural Network using TensorFlow and Keras.
+
+The trained model is saved as:
+
+`best_model.keras`
+
+The model receives preprocessed sensor measurements and produces a probability between 0 and 1.
+
+### Prediction Logic
+
+The application uses a classification threshold of 0.5:
+
+- Probability ≥ 0.50: Battery failure risk detected.
+- Probability < 0.50: Lower predicted battery failure risk.
+
+The preprocessing scaler is saved separately as `scaler.pkl` to ensure uploaded data undergoes the same scaling process expected by the trained model.
+
+## 7. Model Evaluation
+
+The reported experimental evaluation produced the following results:
+
+| Metric | Result |
+|---|---:|
+| Accuracy | 86% |
+| Recall | 60% |
+| True Negatives | 21,636 |
+| False Positives | 1,256 |
+| False Negatives | 2,850 |
+| True Positives | 4,258 |
+
+The model achieved approximately 86% accuracy and 60% recall on the reported evaluation dataset.
+
+Recall is particularly important in predictive maintenance because missed battery failure cases can result in unexpected system interruptions.
+
+**Note:** These are experimental results obtained using synthetic data. Performance on real solar microgrid installations requires further validation using actual operational sensor data.
+
+## 8. Application Features
+
+- CSV-based sensor data upload.
+- Automatic validation of required input features.
+- Data preprocessing using a saved scaler.
+- Deep learning-based battery failure probability estimation.
+- Risk classification using a predefined threshold.
+- Display of prediction results through a Streamlit interface.
+
+## 9. Technologies Used
+
+| Technology | Application |
+|---|---|
+| Python | Core programming language |
+| TensorFlow / Keras | Deep learning model |
+| Pandas | Data processing |
+| Joblib | Loading preprocessing scaler |
+| Scikit-learn | Data preprocessing |
+| Streamlit | Interactive web application |
+| NumPy | Numerical computing |
+
+## 10. Project Structure
+
+```text
+Solar_Microgrid_AI/
+│
+├── app.py
+├── best_model.keras
+├── scaler.pkl
+├── failure_risk_battery.csv
+├── healthy_battery.csv
+├── README.md
+└── .gitignore
+```
+
+## 11. Installation and Setup
+
+### Prerequisites
+
+- Python 3.10 or another version compatible with the project's TensorFlow dependencies.
+- pip package manager.
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/josephmasasi/solar-microgrid-AI-.git
+```
+
+### Step 2: Navigate to the Project
+
+```bash
+cd Solar_Microgrid_AI
+```
+
+### Step 3: Create a Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+Activate it on Windows:
+
+```powershell
+venv\Scripts\activate
+```
+
+### Step 4: Install Dependencies
+
+```bash
+pip install streamlit pandas tensorflow joblib scikit-learn numpy
+```
+
+### Step 5: Run the Application
+
+```bash
+streamlit run app.py
+```
+
+The application will open in your browser.
+
+## 12. How to Use the System
+
+1. Launch the Streamlit application.
+2. Prepare a CSV file containing the required sensor features.
+3. Upload the CSV file using the upload interface.
+4. The application validates the uploaded data.
+5. The trained model processes the sensor measurements.
+6. View the predicted battery failure probability and risk classification.
+
+Two sample CSV files are included:
+
+- `healthy_battery.csv`
+- `failure_risk_battery.csv`
+
+These can be used to explore the application's input workflow.
+
+## 13. Limitations and Future Improvements
+
+Potential future improvements include:
+
+- Validation using real-world solar microgrid operational datasets.
+- Deployment on resource-constrained edge computing devices.
+- Integration with live IoT sensor data.
+- Improved detection of early battery degradation patterns.
+- Model explainability to identify the sensor parameters contributing to failure predictions.
+- Dynamic maintenance recommendations based on predicted risk.
+- Calibration of predicted probabilities and confidence reporting.
+
+## 14. Repository
+
+**GitHub:** https://github.com/josephmasasi/solar-microgrid-AI-
+
+## 15. Author
+
+**Joseph Cletus Masasi**
+
+Computer Engineering | Artificial Intelligence | Machine Learning | Cybersecurity
+
+GitHub: https://github.com/josephmasasi
+
+---
+
+*An academic and experimental project exploring the application of deep learning to predictive maintenance in solar microgrid systems.*
